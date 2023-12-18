@@ -1,23 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import Axios from 'axios';
+import {useEffect, useState} from 'react';
 
+// 為了顯示出來，要用 useState
 function App() {
+  const [catFact, setCatFact] = useState("");
+
+  useEffect(()=>{
+    Axios.get("https://catfact.ninja/fact").then((res)=>{
+      console.log(res.data);
+      setCatFact(res.data.fact);
+    });
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {catFact}
     </div>
   );
 }
